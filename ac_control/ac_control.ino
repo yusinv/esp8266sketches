@@ -13,10 +13,11 @@
 #define MQTT_USER ""
 #define MQTT_PASSWORD ""
 
-#define ROOM_NAME "bedroom"
+#define ROOM_NAME "bedroom"  //bedroom livingroom
 #define AVAILABILITY_TOPIC "home/" ROOM_NAME "/ac/available"
 #define PAYLOAD_AVAILABLE "online"
 #define PAYLOAD_NOT_AVAILABLE "offline"
+#define PAYLOAD_REQUEST_CONFIGS "configs"
 
 #define POWER_COMMAND_TOPIC "home/" ROOM_NAME "/ac/power/set"
 #define MODE_COMMAND_TOPIC "home/" ROOM_NAME "/ac/mode/set"
@@ -233,6 +234,9 @@ void reconnect()
             client.subscribe(HIGH_TEMPERATURE_COMMAND_TOPIC);
             client.subscribe(FAN_COMMAND_TOPIC);
             client.subscribe(SWING_COMMAND_TOPIC);
+
+            //request configs
+            client.publish(AVAILABILITY_TOPIC, PAYLOAD_REQUEST_CONFIGS);
         }
         else {
             Serial.print("failed, rc=");
